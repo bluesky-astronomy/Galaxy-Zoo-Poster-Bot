@@ -56,7 +56,7 @@ This classification was made in the {} project.
 
 def post(image, metadata, client, clsf, project):
 
-    alt_im_text = 'A {} from the {} project.' % (clsf, project)
+    alt_im_text = 'A {} from the {} project.'.format(clsf, project)
 
     response = (
         client.send_image(
