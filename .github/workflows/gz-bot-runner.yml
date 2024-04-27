@@ -7,21 +7,24 @@ jobs:
  run-script:
   runs-on: ubuntu-latest
   steps:
-  - name: Tokens
-    env: 
-     USRNAME: ${{ secrets.USRNAME}}
-     PWD: ${{ secrets.PWD }}
-     CAT_PATH: ${{ secrets.CAT_PATH }}
-  - name: Checkout repository
-    uses: actions/checkout@v4
+   - name: Checkout repository
+     uses: actions/checkout@v4
+       
+   - name: Set Up Python
+     uses: actions/setup-python@v4
+     with:
+      python-version: '3.11'
       
-  - name: Set Up Python
-    uses: actions/setup-python@v4
-    with:
-     python-version: '3.11'
-  - name: Install Dependencies
-    run: |
-     python -m pip install --upgrade pip
-     pip install -r requirements.txt
-  - name: Running Bot
-    run: python gz-bot.py
+   - name: Setting Tokens
+     env: 
+      USRNAME: ${{ secrets.USRNAME}}
+      PWD: ${{ secrets.PWD }}
+      CAT_PATH: ${{ secrets.CAT_PATH }}
+      
+   - name: Install Dependencies
+     run: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+      
+   - name: Running Bot
+     run: python gz-bot.py
