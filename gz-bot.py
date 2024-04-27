@@ -3,6 +3,7 @@ from atproto import Client
 
 import pandas as pd
 import requests
+import sys
 from io import BytesIO
 
 import os
@@ -76,6 +77,12 @@ def main():
     usrname = os.environ['USRNAME']
     pwd = os.environ['PWD']
     cat_path = os.environ['CAT_PATH']
+
+    print(len(usrname))
+    print(len(pwd))
+
+    if not usrname:
+        sys.exit()
 
     _ = client.login(usrname, pwd)
 
