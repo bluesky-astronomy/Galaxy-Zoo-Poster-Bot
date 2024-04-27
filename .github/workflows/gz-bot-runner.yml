@@ -23,6 +23,6 @@ jobs:
   - name: Running Bot
     env: 
      USRNAME: ${{ secrets.USRNAME }}
-     PWD: ${{ secrets.PWD }}
+     PWD: ${{ secrets.BSKY_CODE }}
      CAT_PATH: ${{ secrets.CAT_PATH }}
     run: python gz-bot.py
