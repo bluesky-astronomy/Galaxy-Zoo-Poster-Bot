@@ -79,6 +79,7 @@ def main():
     cat_path = os.environ['CAT_PATH']
 
     print(len(pwd))
+    print(pwd)
 
     _ = client.login(usrname, pwd)
 
