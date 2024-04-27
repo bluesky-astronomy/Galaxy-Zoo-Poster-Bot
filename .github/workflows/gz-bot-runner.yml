@@ -23,7 +23,6 @@ jobs:
   - name: Running Bot
     env: 
      USRNAME: ${{ secrets.USRNAME }}
-     BLU_CODE: ${{ vars.BSKY_CODE }}
+     BLU_CODE: ${{ secrets.BSKY_CODE }}
      CAT_PATH: ${{ secrets.CAT_PATH }}
-    run: echo "$BLU_CODE is what's going into the bot."
-    # run: python gz-bot.py
+    run: python gz-bot.py
