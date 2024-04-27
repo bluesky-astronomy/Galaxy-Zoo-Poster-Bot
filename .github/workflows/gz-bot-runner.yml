@@ -1,8 +1,9 @@
-name: Python Script
+name: Galaxy Zoo Poster
 on:
- push:
-  branches:
-   - 'main'
+  schedule:
+    # runs 
+    - cron: '0 * * * *'
+
 jobs:
  run-script:
   runs-on: ubuntu-latest
