@@ -1,0 +1,19 @@
+name: Python Script
+on:
+ push:
+  branches:
+   - 'main'
+jobs:
+ run-script:
+  runs-on: ubuntu-latest
+  steps:
+  - name: Checkout repository
+    uses: actions/checkout@v2
+      
+  - name: Set Up Python
+    uses: actions/setup-python@v2
+    with:
+     python-version: '3.9'
+     run: pip install -r requirements.txt
+  - name: Running Bot
+    run: python gz-bot.py
