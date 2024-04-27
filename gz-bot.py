@@ -78,11 +78,7 @@ def main():
     pwd = os.environ['PWD']
     cat_path = os.environ['CAT_PATH']
 
-    print(len(usrname))
     print(len(pwd))
-
-    if not usrname:
-        sys.exit()
 
     _ = client.login(usrname, pwd)
 
