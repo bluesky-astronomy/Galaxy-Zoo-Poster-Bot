@@ -82,7 +82,7 @@ def main():
 
     # Selecting a Galaxy to upload.
     gal_data = pd.read_csv(cat_path).sample(1)
-    url = gal_data['image_url']
+    url = gal_data['image_url'].iloc[0]
 
     # Creating the Post
     image = pull_galaxy_image(url)
@@ -90,6 +90,8 @@ def main():
 
     # Posting
     response = post(image, post_string, client, gal_data.galaxy_description.iloc[0], gal_data.project.iloc[0])
+
+    print(response)
 
 ## Initialisation
 if __name__ == '__main__':
