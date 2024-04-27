@@ -73,20 +73,19 @@ def main():
     client = Client()
 
     # Getting log in details
-    usrname = os.environ.get('USRNAME')
-    pwd = os.environ.get('PWD')
-    cat_path = os.environ.get('CAT_PATH')
+    usrname = os.environ['USRNAME']
+    pwd = os.environ['PWD']
+    cat_path = os.environ[]'CAT_PATH']
 
     _ = client.login(usrname, pwd)
 
     # Selecting a Galaxy to upload.
     gal_data = pd.read_csv(cat_path).sample(1)
     url = gal_data['image_url']
-    gal_info = gal_data['some_meta_data']
 
     # Creating the Post
     image = pull_galaxy_image(url)
-    post_string = create_metadata(gal_info)
+    post_string = create_metadata(gal_data)
 
     # Posting
     response = post(image, post_string, client, gal_data.galaxy_description.iloc[0], gal_data.project.iloc[0])
