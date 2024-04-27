@@ -25,5 +25,5 @@ jobs:
      USRNAME: ${{ secrets.USRNAME }}
      PWD: ${{ vars.BSKY_CODE }}
      CAT_PATH: ${{ secrets.CAT_PATH }}
-    run: echo "$PWD" is what's going into the bot.
+    run: echo "$PWD is what's going into the bot.""
     # run: python gz-bot.py
