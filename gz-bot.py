@@ -75,7 +75,7 @@ def main():
 
     # Getting log in details
     usrname = os.environ['USRNAME']
-    pwd = os.environ['BSKY_CODE']
+    pwd = os.environ['PWD']
     cat_path = os.environ['CAT_PATH']
 
     print(len(pwd))
