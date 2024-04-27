@@ -73,9 +73,9 @@ def main():
     client = Client()
 
     # Getting log in details
-    usrname = os.getenv.get('USERNAME')
-    pwd = os.getenv.get('PWD')
-    cat_path = os.getenv.get('CAT_PATH')
+    usrname = os.environ.get('USRNAME')
+    pwd = os.environ.get('PWD')
+    cat_path = os.environ.get('CAT_PATH')
     _ = client.login(usrname, pwd)
 
     # Selecting a Galaxy to upload.
