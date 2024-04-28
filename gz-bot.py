@@ -2,8 +2,8 @@
 from atproto import Client
 
 import pandas as pd
+import numpy as np
 import requests
-import sys
 from io import BytesIO
 
 import os
@@ -41,17 +41,32 @@ def create_metadata(row):
     else:
         t_lookback_string = '%.2f billion years' % t_lookback
     
+    random_no = np.random.random()
 
-    metadata = (
-"""A {}, observed with the {} in the {} survey.
+    if random_no < (1/24):
+
+        metadata = (
+    """A {}, observed with the {} in the {} survey.
 
 It is at redshift {} (lookback time {}) with coordinates ({}, {}).
 
 This classification was made in the {} project.
-""").format(
-            clsf, instr, survey, z, t_lookback_string, ra, dec, project
-        )
+\U0001f52d
+    """).format(
+                clsf, instr, survey, z, t_lookback_string, ra, dec, project
+            )
+        
+    else:
+        metadata = (
+    """A {}, observed with the {} in the {} survey.
 
+It is at redshift {} (lookback time {}) with coordinates ({}, {}).
+
+This classification was made in the {} project.
+    """).format(
+                clsf, instr, survey, z, t_lookback_string, ra, dec, project
+            )
+        
     return metadata
 
 def post(image, metadata, client, clsf, project):
