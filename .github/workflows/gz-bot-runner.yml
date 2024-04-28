@@ -2,7 +2,7 @@ name: Galaxy Zoo Poster
 on:
   schedule:
     # runs 
-    - cron: '0 */3 * * *'
+    - cron: '0 * * * *'
 
 jobs:
  run-script:
