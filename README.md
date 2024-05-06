@@ -3,11 +3,12 @@ This repository contains the code to post an image of a galaxy from the Galaxy Z
 
 The process of creating the bot and running it with GitHub actions is surprisingly easy. Therefore, please use this repository as an example to create your own bots for different things. I really think that these hourly bot posters were a brilliant thing that Twitter killed off. So, let's see some more of them on BlueSky!
 
-This repository is laid out as follows:
-    1. posting-to-bluesky-example.ipynb - A Jupyter Notebook breaking down the process of using Python to write a post, add image data and publish it on BlueSky. If you are just beginning to write the code for your bot, I'd recommend you start here.
+This repository is laid out as follows.
 
-    2. creating-a-github-workflow.ipynb - A Jupyter Notebook breaking down the process of creating a GitHub Actions workflow to schedule your bot. This will introduce GitHub actions, how to use Secret Access Tokens and how to create a cron schedular.
+<ins>posting-to-bluesky-example.ipynb</ins> - A Jupyter Notebook breaking down the process of using Python to write a post, add image data and publish it on BlueSky. If you are just beginning to write the code for your bot, I'd recommend you start here.
 
-    3. gz-bot.py - The python script which is actually run within the GitHub Actions workflow every hour. May be used as a working example.
+<ins>creating-a-github-workflow.ipynb</ins> - A Jupyter Notebook breaking down the process of creating a GitHub Actions workflow to schedule your bot. This will introduce GitHub actions, how to use Secret Access Tokens and how to create a cron schedular.
 
-    4. requirements.txt - The Python packages that must be installed to run the Python script. See creating-a-github-workflow.ipynb for how this is used.
+<ins>gz-bot.py</ins> - The python script which is run within the GitHub Actions workflow every hour. May be used as a working example.
+
+<ins>requirements.txt</ins> - The Python packages that must be installed to run the Python script. See creating-a-github-workflow.ipynb for how this is used.
