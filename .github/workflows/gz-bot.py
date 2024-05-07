@@ -92,8 +92,9 @@ def post(image, metadata, client, clsf, project):
                     image_alt = alt_im_text
                 )
             )
+            attempt = 10
         except:
-            time.sleep(30)
+            time.sleep(10)
             attempt += 1
     
     return response
