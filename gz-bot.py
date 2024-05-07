@@ -4,6 +4,7 @@ from atproto import Client
 import pandas as pd
 import numpy as np
 import requests
+import time
 from io import BytesIO
 
 import os
@@ -80,13 +81,20 @@ def post(image, metadata, client, clsf, project):
 
     alt_im_text = 'A {} from the {} project.'.format(clsf, project)
 
-    response = (
-        client.send_image(
-            text = metadata, 
-            image = image, 
-            image_alt = alt_im_text
-        )
-    )
+    attempt = 0
+
+    while attempt < 5:
+        try:
+            response = (
+                client.send_image(
+                    text = metadata, 
+                    image = image, 
+                    image_alt = alt_im_text
+                )
+            )
+        except:
+            time.sleep(30)
+            attempt += 1
     
     return response
 
