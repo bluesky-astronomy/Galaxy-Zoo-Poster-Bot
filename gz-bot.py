@@ -40,31 +40,38 @@ def create_metadata(row):
         t_lookback_string = '%.3f million years' % tmp
     else:
         t_lookback_string = '%.2f billion years' % t_lookback
+
+    vowels = ['a', 'e', 'i', 'o', 'u']
+    start = 'A'
+    if clsf[0] in vowels:
+        start = 'An'
+    else:
+        start = 'A'
     
     random_no = np.random.random()
 
     if random_no < (1/24):
 
         metadata = (
-    """A {}, observed with the {} in the {} survey.
+    """{} {}, observed with the {} in the {} survey.
 
 It is at redshift {} (lookback time {}) with coordinates ({}, {}).
 
 This classification was made in the {} project.
 \U0001f52d
     """).format(
-                clsf, instr, survey, z, t_lookback_string, ra, dec, project
+                start, clsf, instr, survey, z, t_lookback_string, ra, dec, project
             )
         
     else:
         metadata = (
-    """A {}, observed with the {} in the {} survey.
+    """{} {}, observed with the {} in the {} survey.
 
 It is at redshift {} (lookback time {}) with coordinates ({}, {}).
 
 This classification was made in the {} project.
     """).format(
-                clsf, instr, survey, z, t_lookback_string, ra, dec, project
+                start, clsf, instr, survey, z, t_lookback_string, ra, dec, project
             )
         
     return metadata
