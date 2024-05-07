@@ -2,7 +2,9 @@
 from atproto import Client
 
 import pandas as pd
+import numpy as np
 import requests
+import time
 from io import BytesIO
 
 import os
@@ -39,31 +41,60 @@ def create_metadata(row):
         t_lookback_string = '%.3f million years' % tmp
     else:
         t_lookback_string = '%.2f billion years' % t_lookback
-    
 
-    metadata = (
-"""A {}, observed with the {} in the {} survey.
+    vowels = ['a', 'e', 'i', 'o', 'u']
+    start = 'A'
+    if clsf[0] in vowels:
+        start = 'An'
+    else:
+        start = 'A'
+    
+    random_no = np.random.random()
+
+    if random_no < (1/24):
+
+        metadata = (
+    """{} {}, observed with the {} in the {} survey.
 
 It is at redshift {} (lookback time {}) with coordinates ({}, {}).
 
 This classification was made in the {} project.
-""").format(
-            clsf, instr, survey, z, t_lookback_string, ra, dec, project
-        )
+\U0001f52d
+    """).format(
+                start, clsf, instr, survey, z, t_lookback_string, ra, dec, project
+            )
+        
+    else:
+        metadata = (
+    """{} {}, observed with the {} in the {} survey.
 
+It is at redshift {} (lookback time {}) with coordinates ({}, {}).
+
+This classification was made in the {} project.
+    """).format(
+                start, clsf, instr, survey, z, t_lookback_string, ra, dec, project
+            )
+        
     return metadata
 
 def post(image, metadata, client, clsf, project):
 
-    alt_im_text = 'A {} from the {} project.' % (clsf, project)
+    alt_im_text = 'A {} from the {} project.'.format(clsf, project)
 
-    response = (
-        client.send_image(
-            text = metadata, 
-            image = image, 
-            image_alt = alt_im_text
-        )
-    )
+    attempt = 0
+
+    while attempt < 5:
+        try:
+            response = (
+                client.send_image(
+                    text = metadata, 
+                    image = image, 
+                    image_alt = alt_im_text
+                )
+            )
+        except:
+            time.sleep(30)
+            attempt += 1
     
     return response
 
@@ -73,22 +104,24 @@ def main():
     client = Client()
 
     # Getting log in details
-    usrname = os.getenv.get('USERNAME')
-    pwd = os.getenv.get('PWD')
-    cat_path = os.getenv.get('CAT_PATH')
+    usrname = os.environ['USRNAME']
+    pwd = os.environ['BLU_CODE']
+    cat_path = os.environ['CAT_PATH']
+
     _ = client.login(usrname, pwd)
 
     # Selecting a Galaxy to upload.
     gal_data = pd.read_csv(cat_path).sample(1)
-    url = gal_data['image_url']
-    gal_info = gal_data['some_meta_data']
+    url = gal_data['image_url'].iloc[0]
 
     # Creating the Post
     image = pull_galaxy_image(url)
-    post_string = create_metadata(gal_info)
+    post_string = create_metadata(gal_data)
 
     # Posting
     response = post(image, post_string, client, gal_data.galaxy_description.iloc[0], gal_data.project.iloc[0])
+
+    print(response)
 
 ## Initialisation
 if __name__ == '__main__':
