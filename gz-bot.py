@@ -56,31 +56,25 @@ def create_metadata(row):
 
     if random_no < (1./20.):
 
-        metadata = (
-    """{} {}, observed with the {} in the {} survey.
-
-It is at redshift {} (lookback time {}) with coordinates ({}, {}).
-
-{} volunteers classified this galaxy in {}.
-\U0001f52d
-    """).format(
-                start, clsf, instr, survey, z, t_lookback_string, ra, dec, n_class, project
-            )
-        
+        feed_emoji = """
+        \U0001f52d"""
     else:
-        metadata = (
+        feed_emoji = ""
+
+
+    metadata = (
     """{} {}, observed with the {} in the {} survey.
 
 It is at redshift {} (lookback time {}) with coordinates ({}, {}).
 
-{} volunteers classified this galaxy in {}.
+{} volunteers classified this galaxy in {}.{}
     """).format(
-                start, clsf, instr, survey, z, t_lookback_string, ra, dec, n_class, project
+                start, clsf, instr, survey, z, t_lookback_string, ra, dec, n_class, project, feed_emoji
             )
         
     return metadata
 
-def post(image, metadata, client, clsf, project):
+def post(image, metadata, client, clsf, project, n_class):
 
     alt_im_text = 'A {} from the {} project, classified by {} volunteers.'.format(clsf, project, n_class)
 
@@ -123,7 +117,7 @@ def main():
     post_string = create_metadata(gal_data)
 
     # Posting
-    response = post(image, post_string, client, gal_data.galaxy_description.iloc[0], gal_data.project.iloc[0])
+    response = post(image, post_string, client, gal_data.galaxy_description.iloc[0], gal_data.project.iloc[0], "%d" % gal_data.n_class.iloc[0])
 
     print(response)
 
