@@ -24,6 +24,7 @@ def create_metadata(row):
     dec = "%.5f" % row.dec.iloc[0]
     clsf = row.galaxy_description.iloc[0]
     survey = row.imaging.iloc[0]
+    n_class = "%d" % row.n_class.iloc[0]
     if "CANDELS-COODS" in survey:
         survey = 'CANDELS-GOODS'
        
@@ -60,10 +61,10 @@ def create_metadata(row):
 
 It is at redshift {} (lookback time {}) with coordinates ({}, {}).
 
-This classification was made in the {} project.
+{} volunteers classified this galaxy in {}.
 \U0001f52d
     """).format(
-                start, clsf, instr, survey, z, t_lookback_string, ra, dec, project
+                start, clsf, instr, survey, z, t_lookback_string, ra, dec, n_class, project
             )
         
     else:
@@ -72,16 +73,16 @@ This classification was made in the {} project.
 
 It is at redshift {} (lookback time {}) with coordinates ({}, {}).
 
-This classification was made in the {} project.
+{} volunteers classified this galaxy in {}.
     """).format(
-                start, clsf, instr, survey, z, t_lookback_string, ra, dec, project
+                start, clsf, instr, survey, z, t_lookback_string, ra, dec, n_class, project
             )
         
     return metadata
 
 def post(image, metadata, client, clsf, project):
 
-    alt_im_text = 'A {} from the {} project.'.format(clsf, project)
+    alt_im_text = 'A {} from the {} project, classified by {} volunteers.'.format(clsf, project, n_class)
 
     attempt = 0
 
