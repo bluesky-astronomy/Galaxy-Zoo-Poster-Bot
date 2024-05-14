@@ -38,9 +38,11 @@ def create_metadata(row):
     t_lookback = row.t_lookback.iloc[0]
     if t_lookback < 1:
         tmp = t_lookback * 1000
-        t_lookback_string = '%.3f million years' % tmp
-    else:
+        t_lookback_string = '%.1f million years' % tmp
+    elif t_lookback >= 1:
         t_lookback_string = '%.2f billion years' % t_lookback
+    else:
+        t_lookback_string = 'unknown'
 
     vowels = ['a', 'e', 'i', 'o', 'u']
     start = 'A'
@@ -51,7 +53,7 @@ def create_metadata(row):
     
     random_no = np.random.random()
 
-    if random_no < (1/24):
+    if random_no < (1./20.):
 
         metadata = (
     """{} {}, observed with the {} in the {} survey.
