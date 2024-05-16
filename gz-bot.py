@@ -24,6 +24,7 @@ def create_metadata(row):
     dec = "%.5f" % row.dec.iloc[0]
     clsf = row.galaxy_description.iloc[0]
     survey = row.imaging.iloc[0]
+    n_class = "%d" % row.n_class.iloc[0]
     if "CANDELS-COODS" in survey:
         survey = 'CANDELS-GOODS'
        
@@ -38,9 +39,11 @@ def create_metadata(row):
     t_lookback = row.t_lookback.iloc[0]
     if t_lookback < 1:
         tmp = t_lookback * 1000
-        t_lookback_string = '%.3f million years' % tmp
-    else:
+        t_lookback_string = '%.1f million years' % tmp
+    elif t_lookback >= 1:
         t_lookback_string = '%.2f billion years' % t_lookback
+    else:
+        t_lookback_string = 'unknown'
 
     vowels = ['a', 'e', 'i', 'o', 'u']
     start = 'A'
@@ -51,35 +54,29 @@ def create_metadata(row):
     
     random_no = np.random.random()
 
-    if random_no < (1/24):
+    if random_no < (1./20.):
 
-        metadata = (
-    """{} {}, observed with the {} in the {} survey.
-
-It is at redshift {} (lookback time {}) with coordinates ({}, {}).
-
-This classification was made in the {} project.
-\U0001f52d
-    """).format(
-                start, clsf, instr, survey, z, t_lookback_string, ra, dec, project
-            )
-        
+        feed_emoji = """
+        \U0001f52d"""
     else:
-        metadata = (
+        feed_emoji = ""
+
+
+    metadata = (
     """{} {}, observed with the {} in the {} survey.
 
 It is at redshift {} (lookback time {}) with coordinates ({}, {}).
 
-This classification was made in the {} project.
+{} volunteers classified this galaxy in {}.{}
     """).format(
-                start, clsf, instr, survey, z, t_lookback_string, ra, dec, project
+                start, clsf, instr, survey, z, t_lookback_string, ra, dec, n_class, project, feed_emoji
             )
         
     return metadata
 
-def post(image, metadata, client, clsf, project):
+def post(image, metadata, client, clsf, project, n_class):
 
-    alt_im_text = 'A {} from the {} project.'.format(clsf, project)
+    alt_im_text = 'A {} from the {} project, classified by {} volunteers.'.format(clsf, project, n_class)
 
     attempt = 0
 
@@ -120,7 +117,7 @@ def main():
     post_string = create_metadata(gal_data)
 
     # Posting
-    response = post(image, post_string, client, gal_data.galaxy_description.iloc[0], gal_data.project.iloc[0])
+    response = post(image, post_string, client, gal_data.galaxy_description.iloc[0], gal_data.project.iloc[0], "%d" % gal_data.n_class.iloc[0])
 
     print(response)
 
