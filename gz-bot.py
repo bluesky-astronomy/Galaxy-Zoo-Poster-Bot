@@ -56,8 +56,7 @@ def create_metadata(row):
 
     if random_no < (1./20.):
 
-        feed_emoji = """
-        \U0001f52d"""
+        feed_emoji = "\U0001f52d"
     else:
         feed_emoji = ""
 
